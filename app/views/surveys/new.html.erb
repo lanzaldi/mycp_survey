@@ -1,0 +1,35 @@
+<h1>Purpose in Life Survey</h1>
+<%= form_for @survey, html: {id: "pil_survey_form" } do |f| %>
+	
+	 Click <a href="#">here</a>  if you would like to stop receiving these surveys 
+	 
+
+	<%= f.label "Highest Level of Education:" %>
+	<%= f.select :education, ["", "High school", "College", "Graduate school", "None of the above"] %>
+	
+	<%= f.label "Marital Status:" %>
+	<%= f.select :marital_status, ["", "Single", "Married", "Divorced"] %>
+	
+	<%= f.label "Employment:" %>
+	<%= f.select :employment, ["", "Full-time", "Part-time", "Unemployed"] %>
+	
+	<% @PILq.count.times do |q| %>
+		<div class="PIL_question">
+			<%= f.label "pil#{q+1}_stem".to_sym, "#{q+1}. #{@PILq[q][:stem]}:" %>
+			<% 7.times do |n| %>
+				<div class="PIL_radio">
+					<%= f.radio_button "pil#{q+1}".to_sym, n+1 %>
+					<%= f.label "pil#{q+1}_label#{n+1}".to_sym, n+1 %>
+				</div>
+			<% end %>
+	
+			<div class="labels">
+				<span class = "left"><%= @PILq[q][:l] %></span>
+				<span class = "right"><%= @PILq[q][:r] %></span>
+			</div>
+		</div>
+	<% end %>
+	
+	<%= f.submit "Submit your responses" %>
+
+<% end %>
